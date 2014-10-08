@@ -1,0 +1,16 @@
+#!/bin/bash
+PROJECT_RES="PATH_TO_PROJECT_RES_FOLDER"
+DESIGN_RES="PATH_TO_DESIGNER_FOLDER"
+BACKUP_RES="PATH_TO_BACKUP_FOLDER"
+
+if [ "$1" == "-revert" ]; then
+	yes | cp -r $BACKUP_RES/* $PROJECT_RES
+	echo "BACKUP RESTORED at $PROJECT_RES"
+elif [ "$1" == "-diff" ]; then
+	diff -qr $DESIGN_RES $PROJECT_RES
+else
+	yes | cp -r $PROJECT_RES/* $BACKUP_RES
+	yes | cp -r $DESIGN_RES/* $PROJECT_RES
+	
+	echo $'DONE: Eclipse res folder updated with wild icons. Be CAREFULL!!\n\nCase something went wrong with the new icons you can revert this by doing: ./update_resources -revert'
+fi
